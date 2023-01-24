@@ -1093,7 +1093,7 @@ checkIP() {
         if [[ -n ${localIP} ]]; then
             echoContent yellow " ---> 检测返回值异常，建议手动卸载nginx后重新执行脚本"
         fi
-        local portFirewallPortStatus="443、80、8080、2083、9999"
+        local portFirewallPortStatus="443、80"
 
         if [[ -n "${customPort}" ]]; then
             portFirewallPortStatus="${customPort}"
@@ -1106,10 +1106,7 @@ checkIP() {
                 allowPort "${customPort}"
             else
                 allowPort 80
-				allowPort 8080
                 allowPort 443
-				allowPort 2083
-				allowPort 9999
             fi
 
             handleNginx start

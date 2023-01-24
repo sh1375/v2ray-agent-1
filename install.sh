@@ -1093,7 +1093,7 @@ checkIP() {
         if [[ -n ${localIP} ]]; then
             echoContent yellow " ---> 检测返回值异常，建议手动卸载nginx后重新执行脚本"
         fi
-        local portFirewallPortStatus="443、80"
+        local portFirewallPortStatus="443、80、8080、2083、9999"
 
         if [[ -n "${customPort}" ]]; then
             portFirewallPortStatus="${customPort}"
@@ -1106,7 +1106,10 @@ checkIP() {
                 allowPort "${customPort}"
             else
                 allowPort 80
+				allowPort 8080
                 allowPort 443
+				allowPort 2083
+				allowPort 9999
             fi
 
             handleNginx start
@@ -1336,9 +1339,12 @@ installTLS() {
 
             installTLSCount=1
             echo
-            echoContent red " ---> TLS安装失败，正在检查80、443端口是否开放"
+            echoContent red " ---> TLS安装失败，正在检查80、8080、443、2083、9999端口是否开放"
             allowPort 80
+			allowPort 8080
             allowPort 443
+			allowPort 2083
+			allowPort 9999
             echoContent yellow " ---> 重新尝试安装TLS证书"
 
             if tail -n 10 /etc/v2ray-agent/tls/acme.log | grep -q "Could not validate email address as valid"; then

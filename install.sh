@@ -1339,12 +1339,9 @@ installTLS() {
 
             installTLSCount=1
             echo
-            echoContent red " ---> TLS安装失败，正在检查80、8080、443、2083、9999端口是否开放"
+            echoContent red " ---> TLS安装失败，正在检查80、443端口是否开放"
             allowPort 80
-			allowPort 8080
             allowPort 443
-			allowPort 2083
-			allowPort 9999
             echoContent yellow " ---> 重新尝试安装TLS证书"
 
             if tail -n 10 /etc/v2ray-agent/tls/acme.log | grep -q "Could not validate email address as valid"; then

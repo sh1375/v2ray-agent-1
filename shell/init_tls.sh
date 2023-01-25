@@ -104,7 +104,7 @@ resetNginxConfig(){
 # 备份
 bakConfig(){
     mkdir -p /tmp/sh1375/nginx
-    `cp -Rrf /etc/nginx/nginx.conf /tmp/mack-a/nginx/nginx.conf`
+    `cp -Rrf /etc/nginx/nginx.conf /tmp/sh1375/nginx/nginx.conf`
 }
 # 安装证书
 installTLS(){
@@ -149,7 +149,7 @@ installTLS(){
     fi
     sudo ~/.acme.sh/acme.sh --issue -d ${domain} --standalone -k ec-256 >/dev/null
     ~/.acme.sh/acme.sh --installcert -d ${domain} --fullchainpath /tmp/sh1375/nginx/${domain}.crt --keypath /tmp/sh1375/nginx/${domain}.key --ecc >/dev/null
-    if [[ -z `cat /tmp/mack-a/nginx/${domain}.key` ]]
+    if [[ -z `cat /tmp/sh1375/nginx/${domain}.key` ]]
     then
         echoColor red "证书key生成失败，请重新运行"
         resetNginxConfig
@@ -161,8 +161,8 @@ installTLS(){
         exit
     fi
     echoColor green "证书生成成功"
-    echoColor green "证书目录/tmp/mack-a/nginx"
-    ls /tmp/mack-a/nginx
+    echoColor green "证书目录/tmp/sh1375/nginx"
+    ls /tmp/sh1375/nginx
 
     resetNginxConfig
     if [[ ${nginxStatus} = 2  ]]

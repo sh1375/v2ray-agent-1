@@ -3200,31 +3200,31 @@ EOF
 	
 		#VLESS1
         echoContent yellow " ---> 通用格式(VLESS+WS+TLS)"
-        echoContent green "    vless://${id}@${currentAdd}:8443?encryption=none&security=tls&type=ws&host=${currentHost}&sni=shaparak.ir&alpn=h2&path=/${currentPath}ws#Mobile1\n"
+        echoContent green "    vless://${id}@${currentHost}:8443?encryption=none&security=tls&type=ws&host=${currentAdd}&sni=shaparak.ir&alpn=h2&path=/${currentPath}ws#Mobile1\n"
 
         echoContent yellow " ---> 格式化明文(VLESS+WS+TLS)"
-        echoContent green "    协议类型:VLESS，地址:${currentAdd}，伪装域名/SNI:shaparak.ir，端口:8443，用户ID:${id}，安全:tls，传输方式:ws，路径:/${currentPath}ws，账户名:Mobile1\n"
+        echoContent green "    协议类型:VLESS，地址:${currentHost}，伪装域名/SNI:shaparak.ir，端口:8443，用户ID:${id}，安全:tls，传输方式:ws，路径:/${currentPath}ws，账户名:Mobile1\n"
 
         cat <<EOF >>"/etc/v2ray-agent/subscribe_tmp/${subAccount}"
-vless://${id}@${currentAdd}:8443?encryption=none&security=tls&type=ws&host=${currentHost}&sni=shaparak.ir&alpn=h2&path=/${currentPath}ws#Mobile1
+vless://${id}@${currentHost}:8443?encryption=none&security=tls&type=ws&host=${currentAdd}&sni=shaparak.ir&alpn=h2&path=/${currentPath}ws#Mobile1
 EOF
 
         echoContent yellow " ---> 二维码 VLESS(VLESS+WS+TLS)"
-        echoContent green "    https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=vless%3A%2F%2F${id}%40${currentAdd}%3A8443%3Fencryption%3Dnone%26security%3Dtls%26type%3Dws%26host%3D${currentHost}%26sni%3D${currentHost}%26alpn%3Dh2%26path%3D%252f${currentPath}ws%23Mobile1"
+        echoContent green "    https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=vless%3A%2F%2F${id}%40${currentHost}%3A8443%3Fencryption%3Dnone%26security%3Dtls%26type%3Dws%26host%3D${currentAdd}%26sni%3D${currentHost}%26alpn%3Dh2%26path%3D%252f${currentPath}ws%23Mobile1"
 
 		#VLESS2
         echoContent yellow " ---> 通用格式(VLESS+WS+TLS)"
-        echoContent green "    vless://${id}@${currentAdd}:${currentDefaultPort}?encryption=none&security=tls&type=ws&host=${currentHost}&sni=shaparak.ir&alpn=h2&path=/${currentPath}ws#Mobile2\n"
+        echoContent green "    vless://${id}@${currentHost}:${currentDefaultPort}?encryption=none&security=tls&type=ws&host=${currentAdd}&sni=shaparak.ir&alpn=h2&path=/${currentPath}ws#Mobile2\n"
 
         echoContent yellow " ---> 格式化明文(VLESS+WS+TLS)"
-        echoContent green "    协议类型:VLESS，地址:${currentAdd}，伪装域名/SNI:shaparak.ir，端口:${currentDefaultPort}，用户ID:${id}，安全:tls，传输方式:ws，路径:/${currentPath}ws，账户名:Mobile2\n"
+        echoContent green "    协议类型:VLESS，地址:${currentHost}，伪装域名/SNI:shaparak.ir，端口:${currentDefaultPort}，用户ID:${id}，安全:tls，传输方式:ws，路径:/${currentPath}ws，账户名:Mobile2\n"
 
         cat <<EOF >>"/etc/v2ray-agent/subscribe_tmp/${subAccount}"
-vless://${id}@${currentAdd}:${currentDefaultPort}?encryption=none&security=tls&type=ws&host=${currentHost}&sni=shaparak.ir&alpn=h2&path=/${currentPath}ws#Mobile2
+vless://${id}@${currentHost}:${currentDefaultPort}?encryption=none&security=tls&type=ws&host=${currentAdd}&sni=shaparak.ir&alpn=h2&path=/${currentPath}ws#Mobile2
 EOF
 
         echoContent yellow " ---> 二维码 VLESS(VLESS+WS+TLS)"
-        echoContent green "    https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=vless%3A%2F%2F${id}%40${currentAdd}%3A${currentDefaultPort}%3Fencryption%3Dnone%26security%3Dtls%26type%3Dws%26host%3D${currentHost}%26sni%3D${currentHost}%26alpn%3Dh2%26path%3D%252f${currentPath}ws%23Mobile2"
+        echoContent green "    https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=vless%3A%2F%2F${id}%40${currentHost}%3A${currentDefaultPort}%3Fencryption%3Dnone%26security%3Dtls%26type%3Dws%26host%3D${currentAdd}%26sni%3D${currentHost}%26alpn%3Dh2%26path%3D%252f${currentPath}ws%23Mobile2"
 
     elif [[ "${type}" == "vlessgrpc" ]]; then
 

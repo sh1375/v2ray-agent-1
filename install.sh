@@ -3244,13 +3244,13 @@ EOF
         # URLEncode
 
         echoContent yellow " ---> Trojan(TLS)"
-        echoContent green "    trojan://${id}@${currentHost}:${currentDefaultPort}?peer=${currentAdd}&sni=${currentAdd}&alpn=h2#Mobile3\n"
+        echoContent green "    trojan://${id}@${currentHost}:9999?peer=${currentAdd}&sni=${currentAdd}&alpn=h2#Mobile3\n"
 
         cat <<EOF >>"/etc/v2ray-agent/subscribe_tmp/${subAccount}"
-trojan://${id}@${currentHost}:${currentDefaultPort}?peer=${currentAdd}&sni=${currentAdd}&alpn=h2#Mobile3
+trojan://${id}@${currentHost}:9999?peer=${currentAdd}&sni=${currentAdd}&alpn=h2#Mobile3
 EOF
         echoContent yellow " ---> 二维码 Trojan(TLS)"
-        echoContent green "    https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=trojan%3a%2f%2f${id}%40${currentHost}%3a${port}%3fpeer%3d${currentAdd}%26sni%3d${currentAdd}%26alpn%3Dh2%23Mobile3\n"
+        echoContent green "    https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=trojan%3a%2f%2f${id}%40${currentHost}%3a9999%3fpeer%3d${currentAdd}%26sni%3d${currentAdd}%26alpn%3Dh2%23Mobile3\n"
 
     elif [[ "${type}" == "trojangrpc" ]]; then
         # URLEncode

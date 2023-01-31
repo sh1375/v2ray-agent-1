@@ -3200,27 +3200,27 @@ EOF
 	
 		#VLESS1
         echoContent yellow " ---> 通用格式(VLESS+WS+TLS)"
-        echoContent green "    vless://${id}@www.zarinpal.com:8443?encryption=none&security=tls&type=ws&host=${currentHost}&sni=shaparak.ir&alpn=h2&path=/${currentPath}ws#Mobile1\n"
+        echoContent green "    vless://${id}@www.tgju.org:8443?encryption=none&security=tls&type=ws&host=${currentHost}&sni=www.tgju.org&alpn=h2&path=/${currentPath}ws#Mobile1\n"
 
         echoContent yellow " ---> 格式化明文(VLESS+WS+TLS)"
-        echoContent green "    协议类型:VLESS，地址:www.zarinpal.com，伪装域名/SNI:shaparak.ir，端口:8443，用户ID:${id}，安全:tls，传输方式:ws，路径:/${currentPath}ws，账户名:Mobile1\n"
+        echoContent green "    协议类型:VLESS，地址:www.tgju.org，伪装域名/SNI:www.tgju.org，端口:8443，用户ID:${id}，安全:tls，传输方式:ws，路径:/${currentPath}ws，账户名:Mobile1\n"
 
         cat <<EOF >>"/etc/v2ray-agent/subscribe_tmp/${subAccount}"
-vless://${id}@www.zarinpal.com:${currentDefaultPort}?encryption=none&security=tls&type=ws&host=${currentHost}&sni=shaparak.ir&alpn=h2&path=/${currentPath}ws#Mobile1
+vless://${id}@www.tgju.org:${currentDefaultPort}?encryption=none&security=tls&type=ws&host=${currentHost}&sni=www.tgju.org&alpn=h2&path=/${currentPath}ws#Mobile1
 EOF
 
         echoContent yellow " ---> 二维码 VLESS(VLESS+WS+TLS)"
-        echoContent green "    https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=vless%3A%2F%2F${id}%40www.zarinpal.com%3A8443%3Fencryption%3Dnone%26security%3Dtls%26type%3Dws%26host%3D${currentHost}%26sni%3D${currentHost}%26alpn%3Dh2%26path%3D%252f${currentPath}ws%23Mobile1"
+        echoContent green "    https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=vless%3A%2F%2F${id}%40www.tgju.org%3A8443%3Fencryption%3Dnone%26security%3Dtls%26type%3Dws%26host%3D${currentHost}%26sni%3D${currentHost}%26alpn%3Dh2%26path%3D%252f${currentPath}ws%23Mobile1"
 
 		#VLESS2
         echoContent yellow " ---> 通用格式(VLESS+WS+TLS)"
-        echoContent green "    vless://${id}@${currentAdd}:${currentDefaultPort}?encryption=none&security=tls&type=ws&host=${currentHost}&sni=shaparak.ir&alpn=h2&path=/${currentPath}ws#Mobile2\n"
+        echoContent green "    vless://${id}@${currentAdd}:${currentDefaultPort}?encryption=none&security=tls&type=ws&host=${currentHost}&sni=www.tgju.org&alpn=h2&path=/${currentPath}ws#Mobile2\n"
 
         echoContent yellow " ---> 格式化明文(VLESS+WS+TLS)"
-        echoContent green "    协议类型:VLESS，地址:${currentAdd}，伪装域名/SNI:shaparak.ir，端口:${currentDefaultPort}，用户ID:${id}，安全:tls，传输方式:ws，路径:/${currentPath}ws，账户名:Mobile2\n"
+        echoContent green "    协议类型:VLESS，地址:${currentAdd}，伪装域名/SNI:www.tgju.org，端口:${currentDefaultPort}，用户ID:${id}，安全:tls，传输方式:ws，路径:/${currentPath}ws，账户名:Mobile2\n"
 
         cat <<EOF >>"/etc/v2ray-agent/subscribe_tmp/${subAccount}"
-vless://${id}@${currentAdd}:${currentDefaultPort}?encryption=none&security=tls&type=ws&host=${currentHost}&sni=shaparak.ir&alpn=h2&path=/${currentPath}ws#Mobile2
+vless://${id}@${currentAdd}:${currentDefaultPort}?encryption=none&security=tls&type=ws&host=${currentHost}&sni=www.tgju.org&alpn=h2&path=/${currentPath}ws#Mobile2
 EOF
 
         echoContent yellow " ---> 二维码 VLESS(VLESS+WS+TLS)"
@@ -3229,22 +3229,22 @@ EOF
     elif [[ "${type}" == "vlessgrpc" ]]; then
 
         echoContent yellow " ---> 通用格式(VLESS+gRPC+TLS)"
-        echoContent green "    vless://${id}@${currentAdd}:${currentDefaultPort}?encryption=none&security=tls&type=grpc&host=${currentHost}&path=${currentPath}grpc&serviceName=${currentPath}grpc&alpn=h2&sni=shaparak.ir#VLESS+gRPC\n"
+        echoContent green "    vless://${id}@${currentAdd}:${currentDefaultPort}?encryption=none&security=tls&type=grpc&host=${currentHost}&path=${currentPath}grpc&serviceName=${currentPath}grpc&alpn=h2&sni=www.tgju.org#VLESS+gRPC\n"
 
         echoContent yellow " ---> 格式化明文(VLESS+gRPC+TLS)"
-        echoContent green "    协议类型:VLESS，地址:${currentAdd}，伪装域名/SNI:shaparak.ir，端口:${currentDefaultPort}，用户ID:${id}，安全:tls，传输方式:gRPC，alpn:h2，serviceName:${currentPath}grpc，账户名:VLESS+gRPC\n"
+        echoContent green "    协议类型:VLESS，地址:${currentAdd}，伪装域名/SNI:www.tgju.org，端口:${currentDefaultPort}，用户ID:${id}，安全:tls，传输方式:gRPC，alpn:h2，serviceName:${currentPath}grpc，账户名:VLESS+gRPC\n"
 
         cat <<EOF >>"/etc/v2ray-agent/subscribe_tmp/${subAccount}"
-vless://${id}@${currentAdd}:${currentDefaultPort}?encryption=none&security=tls&type=grpc&host=${currentHost}&path=${currentPath}grpc&serviceName=${currentPath}grpc&alpn=h2&sni=shaparak.ir#VLESS+gRPC
+vless://${id}@${currentAdd}:${currentDefaultPort}?encryption=none&security=tls&type=grpc&host=${currentHost}&path=${currentPath}grpc&serviceName=${currentPath}grpc&alpn=h2&sni=www.tgju.org#VLESS+gRPC
 EOF
         echoContent yellow " ---> 二维码 VLESS(VLESS+gRPC+TLS)"
-        echoContent green "    https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=vless%3A%2F%2F${id}%40${currentAdd}%3A${currentDefaultPort}%3Fencryption%3Dnone%26security%3Dtls%26type%3Dgrpc%26host%3D${currentHost}%26serviceName%3D${currentPath}grpc%26path%3D${currentPath}grpc%26sni%3Dshaparak.ir%26alpn%3Dh2%23VLESS+gRPC"
+        echoContent green "    https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=vless%3A%2F%2F${id}%40${currentAdd}%3A${currentDefaultPort}%3Fencryption%3Dnone%26security%3Dtls%26type%3Dgrpc%26host%3D${currentHost}%26serviceName%3D${currentPath}grpc%26path%3D${currentPath}grpc%26sni%3Dwww.tgju.org%26alpn%3Dh2%23VLESS+gRPC"
 
     elif [[ "${type}" == "trojan" ]]; then
         # URLEncode
 
         echoContent yellow " ---> Trojan(TLS)"
-        echoContent green "    trojan://${id}@${currentHost}:${currentDefaultPort}?peer=${currentHost}&sni=shaparak.ir&alpn=h2#Mobile3\n"
+        echoContent green "    trojan://${id}@${currentHost}:${currentDefaultPort}?peer=${currentHost}&sni=www.tgju.org&alpn=h2#Mobile3\n"
 
         cat <<EOF >>"/etc/v2ray-agent/subscribe_tmp/${subAccount}"
 trojan://${id}@${currentHost}:9999?peer=${currentHost}&sni=${currentAdd}&alpn=h2#Mobile3

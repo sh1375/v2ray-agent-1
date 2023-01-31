@@ -3167,11 +3167,11 @@ EOF
 
     elif [[ "${type}" == "vmessws" ]]; then
 		#VMess 1
-        qrCodeBase64Default=$(echo -n "{\"port\":443,\"ps\":\"${email}\",\"tls\":\"tls\",\"id\":\"${id}\",\"aid\":0,\"v\":2,\"host\":\"${currentHost}\",\"type\":\"none\",\"path\":\"/${currentPath}vws\",\"net\":\"ws\",\"add\":\"${currentAdd}\",\"allowInsecure\":1,\"method\":\"none\",\"peer\":\"${currentHost}\",\"sni\":\"${currentHost}\"}" | base64 -w 0)
+        qrCodeBase64Default=$(echo -n "{\"port\":443,\"ps\":\"${email}\",\"tls\":\"tls\",\"id\":\"${id}\",\"aid\":0,\"v\":2,\"host\":\"${currentHost}\",\"type\":\"none\",\"path\":\"/${currentPath}vws\",\"net\":\"ws\",\"add\":\"${currentAdd}\",\"allowInsecure\":0,\"method\":\"none\",\"peer\":\"${currentHost}\",\"sni\":\"${currentHost}\"}" | base64 -w 0)
         qrCodeBase64Default="${qrCodeBase64Default// /}"
 
         echoContent yellow " ---> 通用json(VMess+WS+TLS)"
-        echoContent green "    {\"port\":443,\"ps\":\"${email}\",\"tls\":\"tls\",\"id\":\"${id}\",\"aid\":0,\"v\":2,\"host\":\"${currentHost}\",\"type\":\"none\",\"path\":\"/${currentPath}vws\",\"net\":\"ws\",\"add\":\"${currentAdd}\",\"allowInsecure\":1,\"method\":\"none\",\"peer\":\"${currentHost}\",\"sni\":\"${currentHost}\"}\n"
+        echoContent green "    {\"port\":443,\"ps\":\"${email}\",\"tls\":\"tls\",\"id\":\"${id}\",\"aid\":0,\"v\":2,\"host\":\"${currentHost}\",\"type\":\"none\",\"path\":\"/${currentPath}vws\",\"net\":\"ws\",\"add\":\"${currentAdd}\",\"allowInsecure\":0,\"method\":\"none\",\"peer\":\"${currentHost}\",\"sni\":\"${currentHost}\"}\n"
         echoContent yellow " ---> 通用vmess(VMess+WS+TLS)链接"
         echoContent green "    vmess://${qrCodeBase64Default}\n"
         echoContent yellow " ---> 二维码 vmess(VMess+WS+TLS)"
@@ -3182,11 +3182,11 @@ EOF
         echoContent green "    https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=vmess://${qrCodeBase64Default}\n"
 
 		#VMess 2
-        qrCodeBase64Default=$(echo -n "{\"port\":8443,\"ps\":\"VMess+WS+TLS\",\"tls\":\"tls\",\"id\":\"${id}\",\"aid\":0,\"v\":2,\"host\":\"${currentHost}\",\"type\":\"none\",\"path\":\"/${currentPath}vws\",\"net\":\"ws\",\"add\":\"${currentAdd}\",\"allowInsecure\":1,\"method\":\"none\",\"peer\":\"${currentHost}\",\"sni\":\"${currentHost}\"}" | base64 -w 0)
+        qrCodeBase64Default=$(echo -n "{\"port\":8443,\"ps\":\"VMess+WS+TLS\",\"tls\":\"tls\",\"id\":\"${id}\",\"aid\":0,\"v\":2,\"host\":\"${currentHost}\",\"type\":\"none\",\"path\":\"/${currentPath}vws\",\"net\":\"ws\",\"add\":\"www.digitalocean.com\",\"allowInsecure\":0,\"method\":\"none\",\"peer\":\"${currentHost}\",\"sni\":\"${currentHost}\"}" | base64 -w 0)
         qrCodeBase64Default="${qrCodeBase64Default// /}"
 
         echoContent yellow " ---> 通用json(VMess+WS+TLS)"
-        echoContent green "    {\"port\":8443,\"ps\":\"VMess+WS+TLS\",\"tls\":\"tls\",\"id\":\"${id}\",\"aid\":0,\"v\":2,\"host\":\"${currentHost}\",\"type\":\"none\",\"path\":\"/${currentPath}vws\",\"net\":\"ws\",\"add\":\"${currentAdd}\",\"allowInsecure\":1,\"method\":\"none\",\"peer\":\"${currentHost}\",\"sni\":\"${currentHost}\"}\n"
+        echoContent green "    {\"port\":8443,\"ps\":\"VMess+WS+TLS\",\"tls\":\"tls\",\"id\":\"${id}\",\"aid\":0,\"v\":2,\"host\":\"${currentHost}\",\"type\":\"none\",\"path\":\"/${currentPath}vws\",\"net\":\"ws\",\"add\":\"www.digitalocean.com\",\"allowInsecure\":0,\"method\":\"none\",\"peer\":\"${currentHost}\",\"sni\":\"${currentHost}\"}\n"
         echoContent yellow " ---> 通用vmess(VMess+WS+TLS)链接"
         echoContent green "    vmess://${qrCodeBase64Default}\n"
         echoContent yellow " ---> 二维码 vmess(VMess+WS+TLS)"
@@ -3200,51 +3200,51 @@ EOF
 	
 		#VLESS1
         echoContent yellow " ---> 通用格式(VLESS+WS+TLS)"
-        echoContent green "    vless://${id}@${currentHost}:8443?encryption=none&security=tls&type=ws&host=${currentAdd}&sni=shaparak.ir&alpn=h2&path=/${currentPath}ws#Mobile1\n"
+        echoContent green "    vless://${id}@www.zarinpal.com:8443?encryption=none&security=tls&type=ws&host=${currentHost}&sni=shaparak.ir&alpn=h2&path=/${currentPath}ws#Mobile1\n"
 
         echoContent yellow " ---> 格式化明文(VLESS+WS+TLS)"
-        echoContent green "    协议类型:VLESS，地址:${currentHost}，伪装域名/SNI:shaparak.ir，端口:8443，用户ID:${id}，安全:tls，传输方式:ws，路径:/${currentPath}ws，账户名:Mobile1\n"
+        echoContent green "    协议类型:VLESS，地址:www.zarinpal.com，伪装域名/SNI:shaparak.ir，端口:8443，用户ID:${id}，安全:tls，传输方式:ws，路径:/${currentPath}ws，账户名:Mobile1\n"
 
         cat <<EOF >>"/etc/v2ray-agent/subscribe_tmp/${subAccount}"
-vless://${id}@${currentHost}:8443?encryption=none&security=tls&type=ws&host=${currentAdd}&sni=shaparak.ir&alpn=h2&path=/${currentPath}ws#Mobile1
+vless://${id}@www.zarinpal.com:${currentDefaultPort}?encryption=none&security=tls&type=ws&host=${currentHost}&sni=shaparak.ir&alpn=h2&path=/${currentPath}ws#Mobile1
 EOF
 
         echoContent yellow " ---> 二维码 VLESS(VLESS+WS+TLS)"
-        echoContent green "    https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=vless%3A%2F%2F${id}%40${currentHost}%3A8443%3Fencryption%3Dnone%26security%3Dtls%26type%3Dws%26host%3D${currentAdd}%26sni%3D${currentHost}%26alpn%3Dh2%26path%3D%252f${currentPath}ws%23Mobile1"
+        echoContent green "    https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=vless%3A%2F%2F${id}%40www.zarinpal.com%3A8443%3Fencryption%3Dnone%26security%3Dtls%26type%3Dws%26host%3D${currentHost}%26sni%3D${currentHost}%26alpn%3Dh2%26path%3D%252f${currentPath}ws%23Mobile1"
 
 		#VLESS2
         echoContent yellow " ---> 通用格式(VLESS+WS+TLS)"
-        echoContent green "    vless://${id}@${currentHost}:${currentDefaultPort}?encryption=none&security=tls&type=ws&host=${currentAdd}&sni=shaparak.ir&alpn=h2&path=/${currentPath}ws#Mobile2\n"
+        echoContent green "    vless://${id}@${currentAdd}:${currentDefaultPort}?encryption=none&security=tls&type=ws&host=${currentHost}&sni=shaparak.ir&alpn=h2&path=/${currentPath}ws#Mobile2\n"
 
         echoContent yellow " ---> 格式化明文(VLESS+WS+TLS)"
-        echoContent green "    协议类型:VLESS，地址:${currentHost}，伪装域名/SNI:shaparak.ir，端口:${currentDefaultPort}，用户ID:${id}，安全:tls，传输方式:ws，路径:/${currentPath}ws，账户名:Mobile2\n"
+        echoContent green "    协议类型:VLESS，地址:${currentAdd}，伪装域名/SNI:shaparak.ir，端口:${currentDefaultPort}，用户ID:${id}，安全:tls，传输方式:ws，路径:/${currentPath}ws，账户名:Mobile2\n"
 
         cat <<EOF >>"/etc/v2ray-agent/subscribe_tmp/${subAccount}"
-vless://${id}@${currentHost}:${currentDefaultPort}?encryption=none&security=tls&type=ws&host=${currentAdd}&sni=shaparak.ir&alpn=h2&path=/${currentPath}ws#Mobile2
+vless://${id}@${currentAdd}:${currentDefaultPort}?encryption=none&security=tls&type=ws&host=${currentHost}&sni=shaparak.ir&alpn=h2&path=/${currentPath}ws#Mobile2
 EOF
 
         echoContent yellow " ---> 二维码 VLESS(VLESS+WS+TLS)"
-        echoContent green "    https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=vless%3A%2F%2F${id}%40${currentHost}%3A${currentDefaultPort}%3Fencryption%3Dnone%26security%3Dtls%26type%3Dws%26host%3D${currentAdd}%26sni%3D${currentHost}%26alpn%3Dh2%26path%3D%252f${currentPath}ws%23Mobile2"
+        echoContent green "    https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=vless%3A%2F%2F${id}%40${currentAdd}%3A${currentDefaultPort}%3Fencryption%3Dnone%26security%3Dtls%26type%3Dws%26host%3D${currentHost}%26sni%3D${currentHost}%26alpn%3Dh2%26path%3D%252f${currentPath}ws%23Mobile2"
 
     elif [[ "${type}" == "vlessgrpc" ]]; then
 
         echoContent yellow " ---> 通用格式(VLESS+gRPC+TLS)"
-        echoContent green "    vless://${id}@${currentHost}:${currentDefaultPort}?encryption=none&security=tls&type=grpc&host=${currentAdd}&path=${currentPath}grpc&serviceName=${currentPath}grpc&alpn=h2&sni=shaparak.ir#VLESS+gRPC\n"
+        echoContent green "    vless://${id}@${currentAdd}:${currentDefaultPort}?encryption=none&security=tls&type=grpc&host=${currentHost}&path=${currentPath}grpc&serviceName=${currentPath}grpc&alpn=h2&sni=shaparak.ir#VLESS+gRPC\n"
 
         echoContent yellow " ---> 格式化明文(VLESS+gRPC+TLS)"
-        echoContent green "    协议类型:VLESS，地址:${currentHost}，伪装域名/SNI:shaparak.ir，端口:${currentDefaultPort}，用户ID:${id}，安全:tls，传输方式:gRPC，alpn:h2，serviceName:${currentPath}grpc，账户名:VLESS+gRPC\n"
+        echoContent green "    协议类型:VLESS，地址:${currentAdd}，伪装域名/SNI:shaparak.ir，端口:${currentDefaultPort}，用户ID:${id}，安全:tls，传输方式:gRPC，alpn:h2，serviceName:${currentPath}grpc，账户名:VLESS+gRPC\n"
 
         cat <<EOF >>"/etc/v2ray-agent/subscribe_tmp/${subAccount}"
-vless://${id}@${currentHost}:${currentDefaultPort}?encryption=none&security=tls&type=grpc&host=${currentAdd}&path=${currentPath}grpc&serviceName=${currentPath}grpc&alpn=h2&sni=shaparak.ir#VLESS+gRPC
+vless://${id}@${currentAdd}:${currentDefaultPort}?encryption=none&security=tls&type=grpc&host=${currentHost}&path=${currentPath}grpc&serviceName=${currentPath}grpc&alpn=h2&sni=shaparak.ir#VLESS+gRPC
 EOF
         echoContent yellow " ---> 二维码 VLESS(VLESS+gRPC+TLS)"
-        echoContent green "    https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=vless%3A%2F%2F${id}%40${currentHost}%3A${currentDefaultPort}%3Fencryption%3Dnone%26security%3Dtls%26type%3Dgrpc%26host%3D${currentAdd}%26serviceName%3D${currentPath}grpc%26path%3D${currentPath}grpc%26sni%3Dshaparak.ir%26alpn%3Dh2%23VLESS+gRPC"
+        echoContent green "    https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=vless%3A%2F%2F${id}%40${currentAdd}%3A${currentDefaultPort}%3Fencryption%3Dnone%26security%3Dtls%26type%3Dgrpc%26host%3D${currentHost}%26serviceName%3D${currentPath}grpc%26path%3D${currentPath}grpc%26sni%3Dshaparak.ir%26alpn%3Dh2%23VLESS+gRPC"
 
     elif [[ "${type}" == "trojan" ]]; then
         # URLEncode
 
         echoContent yellow " ---> Trojan(TLS)"
-        echoContent green "    trojan://${id}@${currentHost}:9999?peer=${currentHost}&sni=${currentAdd}&alpn=h2#Mobile3\n"
+        echoContent green "    trojan://${id}@${currentHost}:${currentDefaultPort}?peer=${currentHost}&sni=shaparak.ir&alpn=h2#Mobile3\n"
 
         cat <<EOF >>"/etc/v2ray-agent/subscribe_tmp/${subAccount}"
 trojan://${id}@${currentHost}:9999?peer=${currentHost}&sni=${currentAdd}&alpn=h2#Mobile3
@@ -3266,12 +3266,12 @@ EOF
 		# trojan 2
 
         echoContent yellow " ---> Trojan gRPC(TLS)"
-        echoContent green "    trojan://${id}@${currentAdd}:2083?encryption=none&peer=${currentHost}&security=tls&type=grpc&sni=${currentHost}&alpn=h2&path=${currentPath}trojangrpc&serviceName=${currentPath}trojangrpc#ADSL&Mobile\n"
+        echoContent green "    trojan://${id}@www.digitalocean.com:2083?encryption=none&peer=${currentHost}&security=tls&type=grpc&sni=${currentHost}&alpn=h2&path=${currentPath}trojangrpc&serviceName=${currentPath}trojangrpc#ADSL&Mobile\n"
         cat <<EOF >>"/etc/v2ray-agent/subscribe_tmp/${subAccount}"
-trojan://${id}@${currentAdd}:2083?encryption=none&peer=${currentHost}&security=tls&type=grpc&sni=${currentHost}&alpn=h2&path=${currentPath}trojangrpc&serviceName=${currentPath}trojangrpc#ADSL&Mobile
+trojan://${id}@www.digitalocean.com:2083?encryption=none&peer=${currentHost}&security=tls&type=grpc&sni=${currentHost}&alpn=h2&path=${currentPath}trojangrpc&serviceName=${currentPath}trojangrpc#ADSL&Mobile
 EOF
         echoContent yellow " ---> 二维码 Trojan gRPC(TLS)"
-        echoContent green "    https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=trojan%3a%2f%2f${id}%40${currentAdd}%3a2083%3Fencryption%3Dnone%26security%3Dtls%26peer%3d${currentHost}%26type%3Dgrpc%26sni%3d${currentHost}%26path%3D${currentPath}trojangrpc%26alpn%3Dh2%26serviceName%3D${currentPath}trojangrpc%23ADSL&Mobile\n"
+        echoContent green "    https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=trojan%3a%2f%2f${id}%40www.digitalocean.com%3a2083%3Fencryption%3Dnone%26security%3Dtls%26peer%3d${currentHost}%26type%3Dgrpc%26sni%3d${currentHost}%26path%3D${currentPath}trojangrpc%26alpn%3Dh2%26serviceName%3D${currentPath}trojangrpc%23ADSL&Mobile\n"
 		# trojan 3
 
         echoContent yellow " ---> Trojan gRPC(TLS)"
@@ -3749,8 +3749,8 @@ updateV2RayCDN() {
     if [[ -n "${currentAdd}" ]]; then
         echoContent red "=============================================================="
         echoContent yellow "1.CNAME www.digitalocean.com"
-        echoContent yellow "2.CNAME www.cloudflare.com"
-        echoContent yellow "3.CNAME hostmonit.com"
+        echoContent yellow "2.CNAME who.int"
+        echoContent yellow "3.CNAME blog.hostmonit.com"
         echoContent yellow "4.手动输入"
         echoContent red "=============================================================="
         read -r -p "请选择:" selectCDNType
@@ -3759,10 +3759,10 @@ updateV2RayCDN() {
             setDomain="www.digitalocean.com"
             ;;
         2)
-            setDomain="www.cloudflare.com"
+            setDomain="who.int"
             ;;
         3)
-            setDomain="hostmonit.com"
+            setDomain="blog.hostmonit.co"
             ;;
         4)
             read -r -p "请输入想要自定义CDN IP或者域名:" setDomain
@@ -5486,7 +5486,7 @@ menu() {
 	cd "$HOME" || exit
 	echoContent red "\n=============================================================="
 	echoContent green "author:sh1375"
-	echoContent green "Current version: v2.6.20"
+	echoContent green "Current version: v2.6.21"
 	echoContent green "Github:https://github.com/sh1375/v2ray-agent-1"
 	echoContent green "Description: 8-in-1 coexistence script\c"
 	showInstallStatus

@@ -2294,7 +2294,7 @@ EOF
     addClientsHysteria "/etc/v2ray-agent/hysteria/conf/config.json" true
 }
 
-# 初始化V2Ray 配置文件
+# Initialize the V2Ray configuration file
 initV2RayConfig() {
     echoContent skyBlue "\n进度 $2/${totalProgress} : 初始化V2Ray配置"
     echo
@@ -2389,7 +2389,7 @@ EOF
 EOF
 
     # VLESS_TCP_TLS
-    # 回落nginx
+    # fallback nginx
     local fallbacksList='{"dest":31300,"xver":0},{"alpn":"h2","dest":31302,"xver":0}'
 
     # trojan
@@ -2422,6 +2422,35 @@ EOF
 		"security": "none",
 		"tcpSettings": {
 			"acceptProxyProtocol": true
+			"header": {
+				"type": "http",
+				"request": {
+				  "version": "1.1",
+				  "method": "GET",
+				  "path": ["/"],
+				  "headers": {
+				    "Host": ["elementorfa.ir", "elementorfa.ir"],
+				    "User-Agent": [
+				      "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36",
+				      "Mozilla/5.0 (iPhone; CPU iPhone OS 10_0_2 like Mac OS X) AppleWebKit/601.1 (KHTML, like Gecko) CriOS/53.0.2785.109 Mobile/14A456 Safari/601.1.46"
+				    ],
+				    "Accept-Encoding": ["gzip, deflate"],
+				    "Connection": ["keep-alive"],
+				    "Pragma": "no-cache"
+				  }
+				},
+				"response": {
+				  "version": "1.1",
+				  "status": "200",
+				  "reason": "OK",
+				  "headers": {
+				    "Content-Type": ["application/octet-stream", "video/mpeg"],
+				    "Transfer-Encoding": ["chunked"],
+				    "Connection": ["keep-alive"],
+				    "Pragma": "no-cache"
+				  }
+				}
+			}
 		}
 	  }
 	}
@@ -2533,10 +2562,13 @@ EOF
   },
   "streamSettings": {
     "network": "ws",
-    "security": "none",
+    "security": "auto",
     "wsSettings": {
       "acceptProxyProtocol": true,
       "path": "/${customPath}vws"
+	   "headers": {
+		"Host": "elementorfa.ir"
+		}
     }
   }
 }
@@ -2611,6 +2643,7 @@ EOF
     "security": "tls",
     "tlsSettings": {
       "minVersion": "1.2",
+	  "maxVersion": "1.3",
       "alpn": [
         "http/1.1",
         "h2"
@@ -2946,7 +2979,7 @@ EOF
   },
   "streamSettings": {
     "network": "ws",
-    "security": "none",
+    "security": "auto",
     "wsSettings": {
       "acceptProxyProtocol": true,
       "path": "/${customPath}vws"
@@ -3011,7 +3044,7 @@ EOF
      {
         "id": "${uuid}",
         "add":"${add}",
-        "flow":"xtls-rprx-vision,none",
+        "flow":"xtls-rprx-vision",
         "email": "${domain}_${uuid}_VLESS_TCP/XTLS"
       }
     ],
@@ -3046,7 +3079,7 @@ EOF
     addClients "/etc/v2ray-agent/xray/conf/02_VLESS_TCP_inbounds.json" "${addClientsStatus}"
 }
 
-# 初始化Trojan-Go配置
+# Initialize Trojan-Go configuration
 initTrojanGoConfig() {
 
     echoContent skyBlue "\n进度 $1/${totalProgress} : 初始化Trojan配置"
@@ -3126,43 +3159,43 @@ defaultBase64Code() {
 
         if [[ "${coreInstallType}" == "1" ]] && echo "${currentInstallProtocolType}" | grep -q 0; then
             echoContent yellow " ---> 通用格式(VLESS+TCP+TLS/xtls-rprx-vision)"
-            echoContent green "    vless://${id}@${currentHost}:${currentDefaultPort}?encryption=none&security=tls&type=tcp&host=${currentHost}&headerType=none&sni=${currentHost}&flow=xtls-rprx-vision#${email}\n"
+            echoContent green "    vless://${id}@${currentHost}:${currentDefaultPort}?encryption=none&security=tls&type=tcp&host=${currentHost}&headerType=dtls&sni=${currentHost}&flow=xtls-rprx-vision#${email}\n"
 
             echoContent yellow " ---> 格式化明文(VLESS+TCP+TLS/xtls-rprx-vision)"
             echoContent green "协议类型:VLESS，地址:${currentHost}，端口:${currentDefaultPort}，用户ID:${id}，安全:tls，传输方式:tcp，flow:xtls-rprx-vision，账户名:${email}\n"
             cat <<EOF >>"/etc/v2ray-agent/subscribe_tmp/${subAccount}"
-vless://${id}@${currentHost}:${currentDefaultPort}?encryption=none&security=tls&type=tcp&host=${currentHost}&headerType=none&sni=${currentHost}&flow=xtls-rprx-vision#${email}
+vless://${id}@${currentHost}:${currentDefaultPort}?encryption=none&security=tls&type=tcp&host=${currentHost}&headerType=dtls&sni=${currentHost}&flow=xtls-rprx-vision#${email}
 EOF
             echoContent yellow " ---> 二维码 VLESS(VLESS+TCP+TLS/xtls-rprx-vision)"
-            echoContent green "    https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=vless%3A%2F%2F${id}%40${currentHost}%3A${currentDefaultPort}%3Fencryption%3Dnone%26security%3Dtls%26type%3Dtcp%26${currentHost}%3D${currentHost}%26headerType%3Dnone%26sni%3D${currentHost}%26flow%3Dxtls-rprx-vision%23${email}\n"
+            echoContent green "    https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=vless%3A%2F%2F${id}%40${currentHost}%3A${currentDefaultPort}%3Fencryption%3Dnone%26security%3Dtls%26type%3Dtcp%26${currentHost}%3D${currentHost}%26headerType%3Ddtls%26sni%3D${currentHost}%26flow%3Dxtls-rprx-vision%23${email}\n"
 
             echoContent skyBlue "----------------------------------------------------------------------------------"
 
         elif [[ "${coreInstallType}" == 2 ]]; then
             echoContent yellow " ---> 通用格式(VLESS+TCP+TLS)"
-            echoContent green "    vless://${id}@${currentHost}:${currentDefaultPort}?security=tls&encryption=none&host=${currentHost}&headerType=none&type=tcp#${email}\n"
+            echoContent green "    vless://${id}@${currentHost}:${currentDefaultPort}?security=tls&encryption=none&host=${currentHost}&headerType=dtls&type=tcp#${email}\n"
 
             echoContent yellow " ---> 格式化明文(VLESS+TCP+TLS)"
             echoContent green "    协议类型:VLESS，地址:${currentHost}，端口:${currentDefaultPort}，用户ID:${id}，安全:tls，传输方式:tcp，账户名:${email}\n"
 
             cat <<EOF >>"/etc/v2ray-agent/subscribe_tmp/${subAccount}"
-vless://${id}@${currentHost}:${currentDefaultPort}?security=tls&encryption=none&host=${currentHost}&headerType=none&type=tcp#${email}
+vless://${id}@${currentHost}:${currentDefaultPort}?security=tls&encryption=none&host=${currentHost}&headerType=dtls&type=tcp#${email}
 EOF
             echoContent yellow " ---> 二维码 VLESS(VLESS+TCP+TLS)"
-            echoContent green "    https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=vless%3a%2f%2f${id}%40${currentHost}%3a${currentDefaultPort}%3fsecurity%3dtls%26encryption%3dnone%26host%3d${currentHost}%26headerType%3dnone%26type%3dtcp%23${email}\n"
+            echoContent green "    https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=vless%3a%2f%2f${id}%40${currentHost}%3a${currentDefaultPort}%3fsecurity%3dtls%26encryption%3dnone%26host%3d${currentHost}%26headerType%3ddtls%26type%3dtcp%23${email}\n"
         fi
 
     elif [[ "${type}" == "trojanTCPXTLS" ]]; then
         echoContent yellow " ---> 通用格式(Trojan+TCP+TLS/xtls-rprx-vision)"
-        echoContent green "    trojan://${id}@${currentHost}:${currentDefaultPort}?encryption=none&security=xtls&type=tcp&host=${currentHost}&headerType=none&sni=${currentHost}&flow=xtls-rprx-vision#TrojanTCPXTLS\n"
+        echoContent green "    trojan://${id}@${currentHost}:${currentDefaultPort}?encryption=none&security=xtls&type=tcp&host=${currentHost}&headerType=dtls&sni=${currentHost}&flow=xtls-rprx-vision#TrojanTCPXTLS\n"
 
         echoContent yellow " ---> 格式化明文(Trojan+TCP+TLS/xtls-rprx-vision)"
         echoContent green "协议类型:Trojan，地址:${currentHost}，端口:${currentDefaultPort}，用户ID:${id}，安全:xtls，传输方式:tcp，flow:xtls-rprx-vision，账户名:TrojanTCPXTLS\n"
         cat <<EOF >>"/etc/v2ray-agent/subscribe_tmp/${subAccount}"
-trojan://${id}@${currentHost}:${currentDefaultPort}?encryption=none&security=xtls&type=tcp&host=${currentHost}&headerType=none&sni=${currentHost}&flow=xtls-rprx-vision#TrojanTCPXTLS
+trojan://${id}@${currentHost}:${currentDefaultPort}?encryption=none&security=xtls&type=tcp&host=${currentHost}&headerType=dtls&sni=${currentHost}&flow=xtls-rprx-vision#TrojanTCPXTLS
 EOF
         echoContent yellow " ---> 二维码 Trojan(Trojan+TCP+TLS/xtls-rprx-vision)"
-        echoContent green "    https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=trojan%3A%2F%2F${id}%40${currentHost}%3A${currentDefaultPort}%3Fencryption%3Dnone%26security%3Dxtls%26type%3Dtcp%26${currentHost}%3D${currentHost}%26headerType%3Dnone%26sni%3D${currentHost}%26flow%3Dxtls-rprx-vision%23TrojanTCPXTLS\n"
+        echoContent green "    https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=trojan%3A%2F%2F${id}%40${currentHost}%3A${currentDefaultPort}%3Fencryption%3Dnone%26security%3Dxtls%26type%3Dtcp%26${currentHost}%3D${currentHost}%26headerType%3Ddtls%26sni%3D${currentHost}%26flow%3Dxtls-rprx-vision%23TrojanTCPXTLS\n"
 
     elif [[ "${type}" == "vmessws" ]]; then
 		#VMess 1
@@ -3887,7 +3920,7 @@ addUser() {
         fi
 
         #	兼容v2ray-core
-        users="{\"id\":\"${uuid}\",\"flow\":\"xtls-rprx-vision,none\",\"email\":\"${email}\",\"alterId\":0}"
+        users="{\"id\":\"${uuid}\",\"flow\":\"xtls-rprx-vision\",\"email\":\"${email}\",\"alterId\":0}"
 
         if [[ "${coreInstallType}" == "2" ]]; then
             users="{\"id\":\"${uuid}\",\"email\":\"${email}\",\"alterId\":0}"
@@ -3914,14 +3947,14 @@ addUser() {
         if echo ${currentInstallProtocolType} | grep -q 1; then
             local vlessUsers="${users//\,\"alterId\":0/}"
             vlessUsers="${vlessUsers//${email}/${email}_VLESS_TCP}"
-            vlessUsers="${vlessUsers//\"flow\":\"xtls-rprx-vision,none\"\,/}"
+            vlessUsers="${vlessUsers//\"flow\":\"xtls-rprx-vision\"\,/}"
             local vlessWsResult
             vlessWsResult=$(jq -r ".inbounds[0].settings.clients += [${vlessUsers}]" ${configPath}03_VLESS_WS_inbounds.json)
             echo "${vlessWsResult}" | jq . >${configPath}03_VLESS_WS_inbounds.json
         fi
 
         if echo ${currentInstallProtocolType} | grep -q 2; then
-            local trojangRPCUsers="${users//\"flow\":\"xtls-rprx-vision,none\"\,/}"
+            local trojangRPCUsers="${users//\"flow\":\"xtls-rprx-vision\"\,/}"
             trojangRPCUsers="${trojangRPCUsers//${email}/${email}_Trojan_gRPC}"
             trojangRPCUsers="${trojangRPCUsers//\,\"alterId\":0/}"
             trojangRPCUsers=${trojangRPCUsers//"id"/"password"}
@@ -3932,7 +3965,7 @@ addUser() {
         fi
 
         if echo ${currentInstallProtocolType} | grep -q 3; then
-            local vmessUsers="${users//\"flow\":\"xtls-rprx-vision,none\"\,/}"
+            local vmessUsers="${users//\"flow\":\"xtls-rprx-vision\"\,/}"
             vmessUsers="${vmessUsers//${email}/${email}_VMess_TCP}"
             local vmessWsResult
             vmessWsResult=$(jq -r ".inbounds[0].settings.clients += [${vmessUsers}]" ${configPath}05_VMess_WS_inbounds.json)
@@ -3940,7 +3973,7 @@ addUser() {
         fi
 
         if echo ${currentInstallProtocolType} | grep -q 5; then
-            local vlessGRPCUsers="${users//\"flow\":\"xtls-rprx-vision,none\"\,/}"
+            local vlessGRPCUsers="${users//\"flow\":\"xtls-rprx-vision\"\,/}"
             vlessGRPCUsers="${vlessGRPCUsers//\,\"alterId\":0/}"
             vlessGRPCUsers="${vlessGRPCUsers//${email}/${email}_VLESS_gRPC}"
             local vlessGRPCResult
@@ -3949,7 +3982,7 @@ addUser() {
         fi
 
         if echo ${currentInstallProtocolType} | grep -q 4; then
-            local trojanUsers="${users//\"flow\":\"xtls-rprx-vision,none\"\,/}"
+            local trojanUsers="${users//\"flow\":\"xtls-rprx-vision\"\,/}"
             trojanUsers="${trojanUsers//id/password}"
             trojanUsers="${trojanUsers//\,\"alterId\":0/}"
             trojanUsers="${trojanUsers//${email}/${email}_Trojan_TCP}"

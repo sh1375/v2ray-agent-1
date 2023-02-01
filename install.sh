@@ -3232,17 +3232,17 @@ EOF
 	
 		#VLESS1
         echoContent yellow " ---> 通用格式(VLESS+WS+TLS)"
-        echoContent green "    vless://${id}@www.iranserver.com:9999?encryption=none&security=tls&type=ws&host=${currentHost}&sni=${currentHost}&alpn=h2&path=/${currentPath}ws#Mobile1\n"
+        echoContent green "    vless://${id}@www.iranserver.com:2096?encryption=none&security=tls&type=ws&host=${currentHost}&sni=${currentHost}&alpn=h2&path=/${currentPath}ws#Mobile1\n"
 
         echoContent yellow " ---> 格式化明文(VLESS+WS+TLS)"
-        echoContent green "    协议类型:VLESS，地址:www.iranserver.com，伪装域名/SNI:${currentHost}，端口:9999，用户ID:${id}，安全:tls，传输方式:ws，路径:/${currentPath}ws，账户名:Mobile1\n"
+        echoContent green "    协议类型:VLESS，地址:www.iranserver.com，伪装域名/SNI:${currentHost}，端口:2096，用户ID:${id}，安全:tls，传输方式:ws，路径:/${currentPath}ws，账户名:Mobile1\n"
 
         cat <<EOF >>"/etc/v2ray-agent/subscribe_tmp/${subAccount}"
-vless://${id}@www.iranserver.com:9999?encryption=none&security=tls&type=ws&host=${currentHost}&sni=${currentHost}&alpn=h2&path=/${currentPath}ws#Mobile1
+vless://${id}@www.iranserver.com:2096?encryption=none&security=tls&type=ws&host=${currentHost}&sni=${currentHost}&alpn=h2&path=/${currentPath}ws#Mobile1
 EOF
 
         echoContent yellow " ---> 二维码 VLESS(VLESS+WS+TLS)"
-        echoContent green "    https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=vless%3A%2F%2F${id}%40www.iranserver.com%3A9999%3Fencryption%3Dnone%26security%3Dtls%26type%3Dws%26host%3D${currentHost}%26sni%3D${currentHost}%26alpn%3Dh2%26path%3D%252f${currentPath}ws%23Mobile1"
+        echoContent green "    https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=vless%3A%2F%2F${id}%40www.iranserver.com%3A2096%3Fencryption%3Dnone%26security%3Dtls%26type%3Dws%26host%3D${currentHost}%26sni%3D${currentHost}%26alpn%3Dh2%26path%3D%252f${currentPath}ws%23Mobile1"
 
 		#VLESS2
         echoContent yellow " ---> 通用格式(VLESS+WS+TLS)"

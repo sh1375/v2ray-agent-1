@@ -3232,17 +3232,17 @@ EOF
 	
 		#VLESS1
         echoContent yellow " ---> 通用格式(VLESS+WS+TLS)"
-        echoContent green "    vless://${id}@avval.ir:8443?encryption=none&security=tls&type=ws&host=${currentHost}&sni=${currentHost}&alpn=h2&path=/${currentPath}ws#Mobile1\n"
+        echoContent green "    vless://${id}@avval.ir:9999?encryption=none&security=tls&type=ws&host=${currentHost}&sni=${currentHost}&alpn=h2&path=/${currentPath}ws#Mobile1\n"
 
         echoContent yellow " ---> 格式化明文(VLESS+WS+TLS)"
-        echoContent green "    协议类型:VLESS，地址:avval.ir，伪装域名/SNI:${currentHost}，端口:8443，用户ID:${id}，安全:tls，传输方式:ws，路径:/${currentPath}ws，账户名:Mobile1\n"
+        echoContent green "    协议类型:VLESS，地址:avval.ir，伪装域名/SNI:${currentHost}，端口:9999，用户ID:${id}，安全:tls，传输方式:ws，路径:/${currentPath}ws，账户名:Mobile1\n"
 
         cat <<EOF >>"/etc/v2ray-agent/subscribe_tmp/${subAccount}"
-vless://${id}@avval.ir:${currentDefaultPort}?encryption=none&security=tls&type=ws&host=${currentHost}&sni=${currentHost}&alpn=h2&path=/${currentPath}ws#Mobile1
+vless://${id}@avval.ir:9999?encryption=none&security=tls&type=ws&host=${currentHost}&sni=${currentHost}&alpn=h2&path=/${currentPath}ws#Mobile1
 EOF
 
         echoContent yellow " ---> 二维码 VLESS(VLESS+WS+TLS)"
-        echoContent green "    https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=vless%3A%2F%2F${id}%40avval.ir%3A8443%3Fencryption%3Dnone%26security%3Dtls%26type%3Dws%26host%3D${currentHost}%26sni%3D${currentHost}%26alpn%3Dh2%26path%3D%252f${currentPath}ws%23Mobile1"
+        echoContent green "    https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=vless%3A%2F%2F${id}%40avval.ir%3A9999%3Fencryption%3Dnone%26security%3Dtls%26type%3Dws%26host%3D${currentHost}%26sni%3D${currentHost}%26alpn%3Dh2%26path%3D%252f${currentPath}ws%23Mobile1"
 
 		#VLESS2
         echoContent yellow " ---> 通用格式(VLESS+WS+TLS)"
@@ -3272,18 +3272,18 @@ EOF
         echoContent yellow " ---> 二维码 VLESS(VLESS+gRPC+TLS)"
         echoContent green "    https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=vless%3A%2F%2F${id}%40${currentAdd}%3A${currentDefaultPort}%3Fencryption%3Dnone%26security%3Dtls%26type%3Dgrpc%26host%3D${currentHost}%26serviceName%3D${currentPath}grpc%26path%3D${currentPath}grpc%26sni%3Davval.ir%26alpn%3Dh2%23VLESS+gRPC"
 
-    elif [[ "${type}" == "trojan" ]]; then
-        # URLEncode
-
-        echoContent yellow " ---> Trojan(TLS)"
-        echoContent green "    trojan://${id}@${currentHost}:${currentDefaultPort}?peer=${currentHost}&sni=${currentAdd}&alpn=h2#Mobile3\n"
-
-        cat <<EOF >>"/etc/v2ray-agent/subscribe_tmp/${subAccount}"
-trojan://${id}@${currentHost}:9999?peer=${currentHost}&sni=${currentAdd}&alpn=h2#Mobile3
-EOF
-        echoContent yellow " ---> 二维码 Trojan(TLS)"
-        echoContent green "    https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=trojan%3a%2f%2f${id}%40${currentHost}%3a9999%3fpeer%3d${currentHost}%26sni%3d${currentAdd}%26alpn%3Dh2%23Mobile3\n"
-
+###    elif [[ "${type}" == "trojan" ]]; then
+###        # URLEncode
+###
+###        echoContent yellow " ---> Trojan(TLS)"
+###       echoContent green "    trojan://${id}@${currentHost}:${currentDefaultPort}?peer=${currentHost}&sni=${currentAdd}&alpn=h2#Mobile3\n"
+###
+###        cat <<EOF >>"/etc/v2ray-agent/subscribe_tmp/${subAccount}"
+###trojan://${id}@${currentHost}:9999?peer=${currentHost}&sni=${currentAdd}&alpn=h2#Mobile3
+###EOF
+###        echoContent yellow " ---> 二维码 Trojan(TLS)"
+###        echoContent green "    https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=trojan%3a%2f%2f${id}%40${currentHost}%3a9999%3fpeer%3d${currentHost}%26sni%3d${currentAdd}%26alpn%3Dh2%23Mobile3\n"
+###
     elif [[ "${type}" == "trojangrpc" ]]; then
         # URLEncode
 		# trojan 1
@@ -3298,12 +3298,12 @@ EOF
 		# trojan 2
 
         echoContent yellow " ---> Trojan gRPC(TLS)"
-        echoContent green "    trojan://${id}@elementorfa.ir:2083?encryption=none&peer=${currentHost}&security=tls&type=grpc&sni=${currentHost}&alpn=h2&path=${currentPath}trojangrpc&serviceName=${currentPath}trojangrpc#ADSL&Mobile\n"
+        echoContent green "    trojan://${id}@www.tgju.org:2083?encryption=none&peer=${currentHost}&security=tls&type=grpc&sni=${currentHost}&alpn=h2&path=${currentPath}trojangrpc&serviceName=${currentPath}trojangrpc#ADSL&Mobile\n"
         cat <<EOF >>"/etc/v2ray-agent/subscribe_tmp/${subAccount}"
-trojan://${id}@elementorfa.ir:2083?encryption=none&peer=${currentHost}&security=tls&type=grpc&sni=${currentHost}&alpn=h2&path=${currentPath}trojangrpc&serviceName=${currentPath}trojangrpc#ADSL&Mobile
+trojan://${id}@www.tgju.org:2083?encryption=none&peer=${currentHost}&security=tls&type=grpc&sni=${currentHost}&alpn=h2&path=${currentPath}trojangrpc&serviceName=${currentPath}trojangrpc#ADSL&Mobile
 EOF
         echoContent yellow " ---> 二维码 Trojan gRPC(TLS)"
-        echoContent green "    https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=trojan%3a%2f%2f${id}%40elementorfa.ir%3a2083%3Fencryption%3Dnone%26security%3Dtls%26peer%3d${currentHost}%26type%3Dgrpc%26sni%3d${currentHost}%26path%3D${currentPath}trojangrpc%26alpn%3Dh2%26serviceName%3D${currentPath}trojangrpc%23ADSL&Mobile\n"
+        echoContent green "    https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=trojan%3a%2f%2f${id}%40www.tgju.org%3a2083%3Fencryption%3Dnone%26security%3Dtls%26peer%3d${currentHost}%26type%3Dgrpc%26sni%3d${currentHost}%26path%3D${currentPath}trojangrpc%26alpn%3Dh2%26serviceName%3D${currentPath}trojangrpc%23ADSL&Mobile\n"
 		# trojan 3
 
         echoContent yellow " ---> Trojan gRPC(TLS)"

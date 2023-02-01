@@ -2421,7 +2421,7 @@ EOF
 		"network": "tcp",
 		"security": "none",
 		"tcpSettings": {
-			"acceptProxyProtocol": true
+			"acceptProxyProtocol": true,
 			"header": {
 				"type": "http",
 				"request": {
@@ -2565,7 +2565,7 @@ EOF
     "security": "auto",
     "wsSettings": {
       "acceptProxyProtocol": true,
-      "path": "/${customPath}vws"
+      "path": "/${customPath}vws",
 	   "headers": {
 		"Host": "elementorfa.ir"
 		}
@@ -3214,11 +3214,11 @@ EOF
         echoContent green "    https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=vmess://${qrCodeBase64Default}\n"
 
 		#VMess 2
-        qrCodeBase64Default=$(echo -n "{\"port\":8443,\"ps\":\"VMess+WS+TLS\",\"tls\":\"tls\",\"id\":\"${id}\",\"aid\":0,\"v\":2,\"host\":\"${currentHost}\",\"type\":\"none\",\"path\":\"/${currentPath}vws\",\"net\":\"ws\",\"add\":\"www.digitalocean.com\",\"allowInsecure\":0,\"method\":\"none\",\"peer\":\"${currentHost}\",\"sni\":\"${currentHost}\"}" | base64 -w 0)
+        qrCodeBase64Default=$(echo -n "{\"port\":8443,\"ps\":\"VMess+WS+TLS\",\"tls\":\"tls\",\"id\":\"${id}\",\"aid\":0,\"v\":2,\"host\":\"${currentHost}\",\"type\":\"none\",\"path\":\"/${currentPath}vws\",\"net\":\"ws\",\"add\":\"elementorfa.ir\",\"allowInsecure\":0,\"method\":\"none\",\"peer\":\"${currentHost}\",\"sni\":\"${currentHost}\"}" | base64 -w 0)
         qrCodeBase64Default="${qrCodeBase64Default// /}"
 
         echoContent yellow " ---> 通用json(VMess+WS+TLS)"
-        echoContent green "    {\"port\":8443,\"ps\":\"VMess+WS+TLS\",\"tls\":\"tls\",\"id\":\"${id}\",\"aid\":0,\"v\":2,\"host\":\"${currentHost}\",\"type\":\"none\",\"path\":\"/${currentPath}vws\",\"net\":\"ws\",\"add\":\"www.digitalocean.com\",\"allowInsecure\":0,\"method\":\"none\",\"peer\":\"${currentHost}\",\"sni\":\"${currentHost}\"}\n"
+        echoContent green "    {\"port\":8443,\"ps\":\"VMess+WS+TLS\",\"tls\":\"tls\",\"id\":\"${id}\",\"aid\":0,\"v\":2,\"host\":\"${currentHost}\",\"type\":\"none\",\"path\":\"/${currentPath}vws\",\"net\":\"ws\",\"add\":\"elementorfa.ir\",\"allowInsecure\":0,\"method\":\"none\",\"peer\":\"${currentHost}\",\"sni\":\"${currentHost}\"}\n"
         echoContent yellow " ---> 通用vmess(VMess+WS+TLS)链接"
         echoContent green "    vmess://${qrCodeBase64Default}\n"
         echoContent yellow " ---> 二维码 vmess(VMess+WS+TLS)"
@@ -3232,51 +3232,51 @@ EOF
 	
 		#VLESS1
         echoContent yellow " ---> 通用格式(VLESS+WS+TLS)"
-        echoContent green "    vless://${id}@www.tgju.org:8443?encryption=none&security=tls&type=ws&host=${currentHost}&sni=www.tgju.org&alpn=h2&path=/${currentPath}ws#Mobile1\n"
+        echoContent green "    vless://${id}@avval.ir:8443?encryption=none&security=tls&type=ws&host=${currentHost}&sni=${currentHost}&alpn=h2&path=/${currentPath}ws#Mobile1\n"
 
         echoContent yellow " ---> 格式化明文(VLESS+WS+TLS)"
-        echoContent green "    协议类型:VLESS，地址:www.tgju.org，伪装域名/SNI:www.tgju.org，端口:8443，用户ID:${id}，安全:tls，传输方式:ws，路径:/${currentPath}ws，账户名:Mobile1\n"
+        echoContent green "    协议类型:VLESS，地址:avval.ir，伪装域名/SNI:${currentHost}，端口:8443，用户ID:${id}，安全:tls，传输方式:ws，路径:/${currentPath}ws，账户名:Mobile1\n"
 
         cat <<EOF >>"/etc/v2ray-agent/subscribe_tmp/${subAccount}"
-vless://${id}@www.tgju.org:${currentDefaultPort}?encryption=none&security=tls&type=ws&host=${currentHost}&sni=www.tgju.org&alpn=h2&path=/${currentPath}ws#Mobile1
+vless://${id}@avval.ir:${currentDefaultPort}?encryption=none&security=tls&type=ws&host=${currentHost}&sni=${currentHost}&alpn=h2&path=/${currentPath}ws#Mobile1
 EOF
 
         echoContent yellow " ---> 二维码 VLESS(VLESS+WS+TLS)"
-        echoContent green "    https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=vless%3A%2F%2F${id}%40www.tgju.org%3A8443%3Fencryption%3Dnone%26security%3Dtls%26type%3Dws%26host%3D${currentHost}%26sni%3D${currentHost}%26alpn%3Dh2%26path%3D%252f${currentPath}ws%23Mobile1"
+        echoContent green "    https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=vless%3A%2F%2F${id}%40avval.ir%3A8443%3Fencryption%3Dnone%26security%3Dtls%26type%3Dws%26host%3D${currentHost}%26sni%3D${currentHost}%26alpn%3Dh2%26path%3D%252f${currentPath}ws%23Mobile1"
 
 		#VLESS2
         echoContent yellow " ---> 通用格式(VLESS+WS+TLS)"
-        echoContent green "    vless://${id}@${currentAdd}:${currentDefaultPort}?encryption=none&security=tls&type=ws&host=${currentHost}&sni=www.tgju.org&alpn=h2&path=/${currentPath}ws#Mobile2\n"
+        echoContent green "    vless://${id}@${currentAdd}:${currentDefaultPort}?encryption=none&security=tls&type=ws&host=${currentHost}&sni=avval.ir&alpn=h2&path=/${currentPath}ws#Mobile2\n"
 
         echoContent yellow " ---> 格式化明文(VLESS+WS+TLS)"
-        echoContent green "    协议类型:VLESS，地址:${currentAdd}，伪装域名/SNI:www.tgju.org，端口:${currentDefaultPort}，用户ID:${id}，安全:tls，传输方式:ws，路径:/${currentPath}ws，账户名:Mobile2\n"
+        echoContent green "    协议类型:VLESS，地址:${currentAdd}，伪装域名/SNI:avval.ir，端口:${currentDefaultPort}，用户ID:${id}，安全:tls，传输方式:ws，路径:/${currentPath}ws，账户名:Mobile2\n"
 
         cat <<EOF >>"/etc/v2ray-agent/subscribe_tmp/${subAccount}"
-vless://${id}@${currentAdd}:${currentDefaultPort}?encryption=none&security=tls&type=ws&host=${currentHost}&sni=www.tgju.org&alpn=h2&path=/${currentPath}ws#Mobile2
+vless://${id}@${currentAdd}:${currentDefaultPort}?encryption=none&security=tls&type=ws&host=${currentHost}&sni=avval.ir&alpn=h2&path=/${currentPath}ws#Mobile2
 EOF
 
         echoContent yellow " ---> 二维码 VLESS(VLESS+WS+TLS)"
-        echoContent green "    https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=vless%3A%2F%2F${id}%40${currentAdd}%3A${currentDefaultPort}%3Fencryption%3Dnone%26security%3Dtls%26type%3Dws%26host%3D${currentHost}%26sni%3D${currentHost}%26alpn%3Dh2%26path%3D%252f${currentPath}ws%23Mobile2"
+        echoContent green "    https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=vless%3A%2F%2F${id}%40${currentAdd}%3A${currentDefaultPort}%3Fencryption%3Dnone%26security%3Dtls%26type%3Dws%26host%3D${currentHost}%26sni%3Davval.ir%26alpn%3Dh2%26path%3D%252f${currentPath}ws%23Mobile2"
 
     elif [[ "${type}" == "vlessgrpc" ]]; then
 
         echoContent yellow " ---> 通用格式(VLESS+gRPC+TLS)"
-        echoContent green "    vless://${id}@${currentAdd}:${currentDefaultPort}?encryption=none&security=tls&type=grpc&host=${currentHost}&path=${currentPath}grpc&serviceName=${currentPath}grpc&alpn=h2&sni=www.tgju.org#VLESS+gRPC\n"
+        echoContent green "    vless://${id}@${currentAdd}:${currentDefaultPort}?encryption=none&security=tls&type=grpc&host=${currentHost}&path=${currentPath}grpc&serviceName=${currentPath}grpc&alpn=h2&sni=avval.ir#VLESS+gRPC\n"
 
         echoContent yellow " ---> 格式化明文(VLESS+gRPC+TLS)"
-        echoContent green "    协议类型:VLESS，地址:${currentAdd}，伪装域名/SNI:www.tgju.org，端口:${currentDefaultPort}，用户ID:${id}，安全:tls，传输方式:gRPC，alpn:h2，serviceName:${currentPath}grpc，账户名:VLESS+gRPC\n"
+        echoContent green "    协议类型:VLESS，地址:${currentAdd}，伪装域名/SNI:avval.ir，端口:${currentDefaultPort}，用户ID:${id}，安全:tls，传输方式:gRPC，alpn:h2，serviceName:${currentPath}grpc，账户名:VLESS+gRPC\n"
 
         cat <<EOF >>"/etc/v2ray-agent/subscribe_tmp/${subAccount}"
-vless://${id}@${currentAdd}:${currentDefaultPort}?encryption=none&security=tls&type=grpc&host=${currentHost}&path=${currentPath}grpc&serviceName=${currentPath}grpc&alpn=h2&sni=www.tgju.org#VLESS+gRPC
+vless://${id}@${currentAdd}:${currentDefaultPort}?encryption=none&security=tls&type=grpc&host=${currentHost}&path=${currentPath}grpc&serviceName=${currentPath}grpc&alpn=h2&sni=avval.ir#VLESS+gRPC
 EOF
         echoContent yellow " ---> 二维码 VLESS(VLESS+gRPC+TLS)"
-        echoContent green "    https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=vless%3A%2F%2F${id}%40${currentAdd}%3A${currentDefaultPort}%3Fencryption%3Dnone%26security%3Dtls%26type%3Dgrpc%26host%3D${currentHost}%26serviceName%3D${currentPath}grpc%26path%3D${currentPath}grpc%26sni%3Dwww.tgju.org%26alpn%3Dh2%23VLESS+gRPC"
+        echoContent green "    https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=vless%3A%2F%2F${id}%40${currentAdd}%3A${currentDefaultPort}%3Fencryption%3Dnone%26security%3Dtls%26type%3Dgrpc%26host%3D${currentHost}%26serviceName%3D${currentPath}grpc%26path%3D${currentPath}grpc%26sni%3Davval.ir%26alpn%3Dh2%23VLESS+gRPC"
 
     elif [[ "${type}" == "trojan" ]]; then
         # URLEncode
 
         echoContent yellow " ---> Trojan(TLS)"
-        echoContent green "    trojan://${id}@${currentHost}:${currentDefaultPort}?peer=${currentHost}&sni=www.tgju.org&alpn=h2#Mobile3\n"
+        echoContent green "    trojan://${id}@${currentHost}:${currentDefaultPort}?peer=${currentHost}&sni=${currentAdd}&alpn=h2#Mobile3\n"
 
         cat <<EOF >>"/etc/v2ray-agent/subscribe_tmp/${subAccount}"
 trojan://${id}@${currentHost}:9999?peer=${currentHost}&sni=${currentAdd}&alpn=h2#Mobile3
@@ -3298,12 +3298,12 @@ EOF
 		# trojan 2
 
         echoContent yellow " ---> Trojan gRPC(TLS)"
-        echoContent green "    trojan://${id}@www.digitalocean.com:2083?encryption=none&peer=${currentHost}&security=tls&type=grpc&sni=${currentHost}&alpn=h2&path=${currentPath}trojangrpc&serviceName=${currentPath}trojangrpc#ADSL&Mobile\n"
+        echoContent green "    trojan://${id}@elementorfa.ir:2083?encryption=none&peer=${currentHost}&security=tls&type=grpc&sni=${currentHost}&alpn=h2&path=${currentPath}trojangrpc&serviceName=${currentPath}trojangrpc#ADSL&Mobile\n"
         cat <<EOF >>"/etc/v2ray-agent/subscribe_tmp/${subAccount}"
-trojan://${id}@www.digitalocean.com:2083?encryption=none&peer=${currentHost}&security=tls&type=grpc&sni=${currentHost}&alpn=h2&path=${currentPath}trojangrpc&serviceName=${currentPath}trojangrpc#ADSL&Mobile
+trojan://${id}@elementorfa.ir:2083?encryption=none&peer=${currentHost}&security=tls&type=grpc&sni=${currentHost}&alpn=h2&path=${currentPath}trojangrpc&serviceName=${currentPath}trojangrpc#ADSL&Mobile
 EOF
         echoContent yellow " ---> 二维码 Trojan gRPC(TLS)"
-        echoContent green "    https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=trojan%3a%2f%2f${id}%40www.digitalocean.com%3a2083%3Fencryption%3Dnone%26security%3Dtls%26peer%3d${currentHost}%26type%3Dgrpc%26sni%3d${currentHost}%26path%3D${currentPath}trojangrpc%26alpn%3Dh2%26serviceName%3D${currentPath}trojangrpc%23ADSL&Mobile\n"
+        echoContent green "    https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=trojan%3a%2f%2f${id}%40elementorfa.ir%3a2083%3Fencryption%3Dnone%26security%3Dtls%26peer%3d${currentHost}%26type%3Dgrpc%26sni%3d${currentHost}%26path%3D${currentPath}trojangrpc%26alpn%3Dh2%26serviceName%3D${currentPath}trojangrpc%23ADSL&Mobile\n"
 		# trojan 3
 
         echoContent yellow " ---> Trojan gRPC(TLS)"

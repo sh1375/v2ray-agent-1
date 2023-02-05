@@ -1193,9 +1193,18 @@ selectAcmeInstallSSL() {
         fi
         dnsSSLStatus=true
     else
-        read -r -p "是否使用DNS申请证书[y/n]:" installSSLDNStatus
-        if [[ ${installSSLDNStatus} == 'y' ]]; then
-            dnsSSLStatus=true
+        if [[ -z "${dnsSSLStatus}" ]]; then
+            read -r -p "是否使用DNS申请证书，如不会使用DNS申请证书请输入n[y/n]:" installSSLDNStatus
+
+            if [[ ${installSSLDNStatus} == 'y' ]]; then
+                dnsSSLStatus=true
+            else
+                dnsSSLStatus=false
+            fi
+        fi
+
+    fi
+    acmeInstallSSL
         fi
     fi
     acmeInstallSSL
@@ -1222,12 +1231,16 @@ acmeInstallSSL() {
             read -r -p "是否添加完成[y/n]:" addDNSTXTRecordStatus
             if [[ "${addDNSTXTRecordStatus}" == "y" ]]; then
                 local txtAnswer=
-                txtAnswer=$(dig +nocmd "_acme-challenge.${dnsTLSDomain}" txt +noall +answer | awk -F "[\"]" '{print $2}')
+                txtAnswer=$(dig @1.1.1.1 +nocmd "_acme-challenge.${dnsTLSDomain}" txt +noall +answer | awk -F "[\"]" '{print $2}')
                 if echo "${txtAnswer}" | grep -q "^${txtValue}"; then
                     echoContent green " ---> TXT记录验证通过"
                     echoContent green " ---> 生成证书中"
-                    sudo "$HOME/.acme.sh/acme.sh" --renew -d "*.${dnsTLSDomain}" -d "${dnsTLSDomain}" --yes-I-know-dns-manual-mode-enough-go-ahead-please --ecc --server "${sslType}" ${installSSLIPv6} 2>&1 | tee -a /etc/v2ray-agent/tls/acme.log >/dev/null
-                else
+                    if [[ -n "${installSSLIPv6}" ]]; then
+                        sudo "$HOME/.acme.sh/acme.sh" --renew -d "*.${dnsTLSDomain}" -d "${dnsTLSDomain}" --yes-I-know-dns-manual-mode-enough-go-ahead-please --ecc --server "${sslType}" ${installSSLIPv6} 2>&1 | tee -a /etc/v2ray-agent/tls/acme.log >/dev/null
+                    else
+                        sudo "$HOME/.acme.sh/acme.sh" --renew -d "*.${dnsTLSDomain}" -d "${dnsTLSDomain}" --yes-I-know-dns-manual-mode-enough-go-ahead-please --ecc --server "${sslType}" 2>&1 | tee -a /etc/v2ray-agent/tls/acme.log >/dev/null
+                    fi
+					else
                     echoContent red " ---> 验证失败，请等待1-2分钟后重新尝试"
                     acmeInstallSSL
                 fi
@@ -1261,7 +1274,7 @@ customPortFunction() {
         echo
         echoContent yellow "请输入端口[默认: 443]，如自定义端口，只允许使用DNS申请证书[回车使用默认]"
         read -r -p "端口:" customPort
-        if [[ -n "${customPort}" ]]; then
+        if [[ -n "${customPort}" && "${customPort}" != "443" ]]; then
             if ((customPort >= 1 && customPort <= 65535)); then
                 checkCustomPort
                 allowPort "${customPort}"
@@ -1270,6 +1283,7 @@ customPortFunction() {
                 exit
             fi
         else
+            customPort=
             echoContent yellow "\n ---> 端口: 443"
         fi
     fi
@@ -1335,9 +1349,12 @@ installTLS() {
 
             installTLSCount=1
             echo
-            echoContent red " ---> TLS安装失败，正在检查80、443端口是否开放"
-            allowPort 80
-            allowPort 443
+            if [[ -z "${customPort}" ]]; then
+                echoContent red " ---> TLS安装失败，正在检查80、443端口是否开放"
+                allowPort 80
+                allowPort 443
+            fi
+
             echoContent yellow " ---> 重新尝试安装TLS证书"
 
             if tail -n 10 /etc/v2ray-agent/tls/acme.log | grep -q "Could not validate email address as valid"; then
@@ -2410,7 +2427,7 @@ EOF
 		"clients": [
 		  {
 			"password": "${uuid}",
-			"email": "${domain}_${uuid}_Trojan_TCP"
+			"email": "default_Trojan_TCP"
 		  }
 		],
 		"fallbacks":[
@@ -2476,7 +2493,7 @@ EOF
 		"clients": [
 		  {
 			"id": "${uuid}",
-			"email": "${domain}_${uuid}_VLESS_WS"
+			"email": "default_VLESS_WS"
 		  }
 		],
 		"decryption": "none"
@@ -2514,7 +2531,7 @@ EOF
                 "clients": [
                     {
                         "password": "${uuid}",
-                        "email": "${domain}_${uuid}_Trojan_gRPC"
+                        "email": "default_Trojan_gRPC"
                     }
                 ],
                 "fallbacks": [
@@ -2556,7 +2573,7 @@ EOF
         "id": "${uuid}",
         "alterId": 0,
         "add": "${add}",
-        "email": "${domain}_${uuid}_VMess_WS"
+        "email": "default_VMess_WS"
       }
     ]
   },
@@ -2593,7 +2610,7 @@ EOF
                 {
                     "id": "${uuid}",
                     "add": "${add}",
-                    "email": "${domain}_${uuid}_VLESS_gRPC"
+                    "email": "default_VLESS_gRPC"
                 }
             ],
             "decryption": "none"
@@ -2630,7 +2647,7 @@ EOF
      {
         "id": "${uuid}",
         "add":"${add}",
-        "email": "${domain}_${uuid}_VLESS_TCP"
+        "email": "default_VLESS_TCP"
       }
     ],
     "decryption": "none",
@@ -2858,7 +2875,7 @@ EOF
 		"clients": [
 		  {
 			"password": "${uuid}",
-			"email": "${domain}_${uuid}_Trojan_TCP"
+			"email": "default_Trojan_TCP"
 		  }
 		],
 		"fallbacks":[
@@ -2895,7 +2912,7 @@ EOF
 		"clients": [
 		  {
 			"id": "${uuid}",
-			"email": "${domain}_${uuid}_VLESS_WS"
+			"email": "default_VLESS_WS"
 		  }
 		],
 		"decryption": "none"
@@ -2933,7 +2950,7 @@ EOF
                 "clients": [
                     {
                         "password": "${uuid}",
-                        "email": "${domain}_${uuid}_Trojan_gRPC"
+                        "email": "default_Trojan_gRPC"
                     }
                 ],
                 "fallbacks": [
@@ -2973,7 +2990,7 @@ EOF
         "id": "${uuid}",
         "alterId": 0,
         "add": "${add}",
-        "email": "${domain}_${uuid}_VMess_WS"
+        "email": "default_VMess_WS"
       }
     ]
   },
@@ -3007,7 +3024,7 @@ EOF
                 {
                     "id": "${uuid}",
                     "add": "${add}",
-                    "email": "${domain}_${uuid}_VLESS_gRPC"
+                    "email": "default_VLESS_gRPC"
                 }
             ],
             "decryption": "none"
@@ -3045,7 +3062,7 @@ EOF
         "id": "${uuid}",
         "add":"${add}",
         "flow":"xtls-rprx-vision",
-        "email": "${domain}_${uuid}_VLESS_TCP/XTLS"
+        "email": "default_VLESS_TCP/XTLS"
       }
     ],
     "decryption": "none",
@@ -3125,20 +3142,21 @@ customCDNIP() {
     echoContent yellow "\n教程地址:"
     echoContent skyBlue "https://github.com/sh1375/v2ray-agent-1/blob/master/documents/optimize_V2Ray.md"
     echoContent red "\n如对Cloudflare优化不了解，请不要使用"
-    echoContent yellow "\n 1.移动:104.16.123.96"
-    echoContent yellow " 2.联通:www.cloudflare.com"
-    echoContent yellow " 3.电信:www.digitalocean.com"
+    echoContent yellow "\n 1.CNAME www.digitalocean.com"
+    echoContent yellow " 2.CNAME who.int"
+    echoContent yellow " 3.CNAME blog.hostmonit.com"
+
     echoContent skyBlue "----------------------------"
     read -r -p "请选择[回车不使用]:" selectCloudflareType
     case ${selectCloudflareType} in
     1)
-        add="104.16.123.96"
+        add="www.digitalocean.com"
         ;;
     2)
-        add="www.cloudflare.com"
+        add="who.int"
         ;;
     3)
-        add="www.digitalocean.com"
+        add="blog.hostmonit.com"
         ;;
     *)
         add="${domain}"
@@ -3349,6 +3367,7 @@ showAccounts() {
 
         else
             echoContent skyBlue "===================== VLESS TCP TLS/XTLS-vision ======================\n"
+            echoContent red "\n --->如客户端不支持vision会使用默认的VLESS TCP TLS，vision可以有效规避端口封禁，非vision则没有此功能，请确认后再使用"
             jq .inbounds[0].settings.clients ${configPath}02_VLESS_TCP_inbounds.json | jq -c '.[]' | while read -r user; do
                 local email=
                 email=$(echo "${user}" | jq -r .email)
@@ -3608,7 +3627,7 @@ addCorePort() {
     echoContent yellow "不影响默认端口的使用"
     echoContent yellow "查看账号时，只会展示默认端口的账号"
     echoContent yellow "不允许有特殊字符，注意逗号的格式"
-    echoContent yellow "会同时安装hysteria新端口"
+    echoContent yellow "如已安装hysteria，会同时安装hysteria新端口"
     echoContent yellow "录入示例:2053,2083,2087\n"
 
     echoContent yellow "1.添加端口"
@@ -3870,7 +3889,7 @@ customUserEmail() {
     read -r -p "请输入合法的email，[回车]随机email:" currentCustomEmail
     echo
     if [[ -z "${currentCustomEmail}" ]]; then
-        currentCustomEmail="${currentHost}_${currentCustomUUID}"
+        currentCustomEmail="${currentCustomUUID}"
         echoContent yellow "email: ${currentCustomEmail}\n"
         #		echoContent red " ---> email不可为空"
     else
@@ -5385,7 +5404,8 @@ manageAccount() {
 	echoContent skyBlue "\nFunction 1/${totalProgress} : Account Management"
     echoContent red "\n=============================================================="
 	echoContent yellow "# Every time you delete or add an account, you need to re-check the subscription to generate a subscription"
-	echoContent yellow "# If Hysteria is installed, the account will be added to Hysteria at the same time\n"
+	echoContent yellow "# You can customize email and uuid when adding a single user"
+	echoContent yellow "# If Hysteria is installed, the account will be added to Hysteria\n"
 	echoContent yellow "1.View account"
 	echoContent yellow "2.View subscription"
 	echoContent yellow "3.Add user"
@@ -5519,7 +5539,7 @@ menu() {
 	cd "$HOME" || exit
 	echoContent red "\n=============================================================="
 	echoContent green "author:sh1375"
-	echoContent green "Current version: v2.6.22"
+	echoContent green "Current version: v2.6.25"
 	echoContent green "Github:https://github.com/sh1375/v2ray-agent-1"
 	echoContent green "Description: 8-in-1 coexistence script\c"
 	showInstallStatus

@@ -1205,9 +1205,6 @@ selectAcmeInstallSSL() {
 
     fi
     acmeInstallSSL
-        fi
-    fi
-    acmeInstallSSL
 
     readAcmeTLS
 }
